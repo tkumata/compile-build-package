@@ -5,21 +5,15 @@ CC = cc
 CFLAGS = -Wall -Wextra -O2
 
 # 実行ファイル名
-TARGET = 02helloworld
-
-# ソースファイル
-SRCS = 02helloworld.c 02hello.c
-
-# オブジェクトファイル
-OBJS = $(SRCS:.c=.o)
-
-# インストール先（デフォルト）
-PREFIX = /usr/local
+TARGETS = 02helloworld 03webserver
 
 # ビルドルール
-all: $(TARGET)
+all: $(TARGETS)
 
-$(TARGET): $(OBJS)
+02helloworld: 02helloworld.o 02hello.o
+	$(CC) $(CFLAGS) -o $@ $^
+
+03webserver: 03webserver.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c
@@ -27,7 +21,7 @@ $(TARGET): $(OBJS)
 
 # クリーンアップ
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f *.o $(TARGETS)
 
 # 再構築
 rebuild: clean all
